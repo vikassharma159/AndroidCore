@@ -1,0 +1,74 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
+}
+
+apply from: "$rootDir/dependencies.gradle"
+
+android {
+    namespace 'com.sample.androidcore'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.sample.androidcore"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation "androidx.core:core-ktx:$dependencyVersion.coreKtx"
+
+    //Hilt
+    implementation "com.google.dagger:hilt-android:$dependencyVersion.hilt"
+    kapt "com.google.dagger:hilt-android-compiler:$dependencyVersion.hilt"
+    implementation "androidx.hilt:hilt-navigation-compose:$dependencyVersion.hiltNavigationCompose"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$dependencyVersion.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$dependencyVersion.retrofit"
+    implementation "com.squareup.okhttp3:logging-interceptor:$dependencyVersion.okHttp"
+    implementation "com.github.skydoves:sandwich:$dependencyVersion.sandwich"
+
+    //Chucker
+    debugImplementation "com.github.chuckerteam.chucker:library:$dependencyVersion.chucker"
+    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:$dependencyVersion.chucker"
+
+    //Data Store
+    implementation "androidx.datastore:datastore-preferences:$dependencyVersion.dataStore"
+
+    //Firebase
+    implementation platform("com.google.firebase:firebase-bom:$dependencyVersion.firebaseBom")
+    implementation 'com.google.firebase:firebase-config-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    //Test
+    testImplementation "junit:junit:$dependencyVersion.junitTest"
+    androidTestImplementation "androidx.test.ext:junit:$dependencyVersion.androidxJunitTest"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$dependencyVersion.androidxEspressoTest"
+
+}
